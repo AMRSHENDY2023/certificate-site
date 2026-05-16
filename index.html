@@ -116,128 +116,18 @@
       font-weight: 900;
     }
 
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 360px;
-      gap: 18px;
-      align-items: stretch;
-      margin-bottom: 18px;
+    .simple-title {
+      margin: 8px 0 18px;
+      text-align: center;
     }
 
-    .hero-main {
-      padding: 18px 6px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      color: var(--accent);
-      background: rgba(255, 255, 255, 0.86);
-      border: 1px solid var(--line);
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .eyebrow i {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    .hero h1 {
-      margin: 14px 0 8px;
+    .simple-title h1 {
+      margin: 0;
       color: var(--primary);
-      font-size: clamp(32px, 5vw, 56px);
-      line-height: 1.1;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1.2;
       font-weight: 900;
       letter-spacing: -0.04em;
-    }
-
-    .hero p {
-      margin: 0;
-      max-width: 640px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.8;
-      font-weight: 700;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 18px;
-      max-width: 580px;
-    }
-
-    .step-card {
-      padding: 12px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.84);
-      border: 1px solid var(--line);
-    }
-
-    .step-card strong {
-      display: block;
-      color: var(--primary);
-      font-size: 18px;
-      font-weight: 900;
-    }
-
-    .step-card span {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .hero-side {
-      position: relative;
-      min-height: 215px;
-      border-radius: 30px;
-      overflow: hidden;
-      background: linear-gradient(145deg, var(--primary), #6b35a0);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-side::before {
-      content: "&";
-      position: absolute;
-      left: -18px;
-      bottom: -85px;
-      color: rgba(255,255,255,0.08);
-      font-size: 250px;
-      line-height: 1;
-      font-weight: 900;
-    }
-
-    .hero-box {
-      position: absolute;
-      left: 22px;
-      right: 22px;
-      bottom: 22px;
-      padding: 18px;
-      border: 1px solid rgba(255,255,255,0.22);
-      border-radius: 22px;
-      background: rgba(255,255,255,0.12);
-      color: #fff;
-    }
-
-    .hero-box span {
-      display: block;
-      color: rgba(255,255,255,0.72);
-      font-size: 12px;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .hero-box strong {
-      font-size: 21px;
-      line-height: 1.45;
-      font-weight: 900;
     }
 
     .workspace {
@@ -591,10 +481,9 @@
     }
 
     @media (max-width: 980px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-side { min-height: 200px; }
       .workspace { grid-template-columns: 1fr; }
       .panel { position: static; }
+      .preview-card { order: -1; }
     }
 
     @media (max-width: 640px) {
@@ -603,12 +492,8 @@
       .brand { flex-direction: column; align-items: flex-start; gap: 4px; }
       .brand-logo { width: 132px; max-width: 60vw; }
       .brand-subtitle, .topbar a { display: none; }
-      .hero h1 { font-size: 34px; }
-      .hero p { font-size: 14px; }
-      .steps { grid-template-columns: 1fr; }
-      .hero-side { min-height: 178px; border-radius: 24px; }
-      .hero-box { left: 16px; right: 16px; bottom: 16px; }
-      .hero-box strong { font-size: 18px; }
+      .simple-title { margin: 8px 0 14px; }
+      .simple-title h1 { font-size: 30px; }
       .preview-head { align-items: flex-start; flex-direction: column; }
       .certificate-stage { padding: 8px; }
       .form-body, .panel-head { padding-inline: 16px; }
@@ -627,25 +512,8 @@
       <a href="#certificate-form">إصدار شهادة</a>
     </header>
 
-    <section class="hero">
-      <div class="hero-main">
-        <div class="eyebrow"><i></i> شهادة إتمام معتمدة من أكاديمية زد</div>
-        <h1>اصدر شهادة اتمام الدورة</h1>
-        <p>تأكد من كتابة الاسم صحيح مثل الاسم المذكور في منصة عصارة.</p>
-
-        <div class="steps">
-          <div class="step-card"><strong>01</strong><span>كتابة البيانات</span></div>
-          <div class="step-card"><strong>02</strong><span>مراجعة المعاينة</span></div>
-          <div class="step-card"><strong>03</strong><span>تحميل الشهادة</span></div>
-        </div>
-      </div>
-
-      <div class="hero-side" aria-hidden="true">
-        <div class="hero-box">
-          <span>منصة إصدار الشهادات</span>
-          <strong>اكتب الاسم وتاريخ الدورة ثم حمّل الشهادة مباشرة</strong>
-        </div>
-      </div>
+    <section class="simple-title">
+      <h1>صانع الشهادات من أكاديمية زد</h1>
     </section>
 
     <section class="workspace">
