@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shendy Studio | استوديو شندي للتصميم والهوية البصرية</title>
+  <meta name="description" content="Shendy Studio - وكالة تصميم متخصصة في السوشيال ميديا، الهوية البصرية، البانرات الإعلانية، الموشن جرافيك وتصميم الواجهات." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-2: #111111;
+      --bg-3: #161616;
+      --card: #18181b;
+      --line: #27272a;
+      --line-2: #3f3f46;
+      --text: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #71717a;
+      --orange: #ff6a00;
+      --orange-2: #ff8a3d;
+      --orange-soft: rgba(255, 106, 0, 0.12);
+      --orange-glow: 0 0 60px rgba(255, 106, 0, 0.25);
+      --radius: 18px;
+      --radius-lg: 28px;
+      --ease: cubic-bezier(.4, 0, .2, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *::selection { background: var(--orange); color: #fff; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cairo', system-ui, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    html[lang="en"] body { font-family: 'Space Grotesk', system-ui, sans-serif; }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+    /* ============ Animated gradient background ============ */
+    .bg-effects {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background: var(--bg);
+      overflow: hidden;
+    }
+    .bg-effects::before, .bg-effects::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+      animation: float 20s ease-in-out infinite;
+    }
+    .bg-effects::before {
+      background: var(--orange);
+      top: -200px; left: -200px;
+    }
+    .bg-effects::after {
+      background: #ff3d00;
+      bottom: -200px; right: -200px;
+      animation-delay: -10s;
+    }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(100px, 100px) scale(1.2); }
+    }
+
+    .grid-bg {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,106,0,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,106,0,0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    }
+
+    /* ============ Navbar ============ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      background: rgba(10, 10, 10, 0.7);
+      border-bottom: 1px solid var(--line);
+      transition: all .3s var(--ease);
+    }
+    .nav.scrolled { background: rgba(10, 10, 10, 0.92); }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 0;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 800; font-size: 20px; letter-spacing: -.02em;
+    }
+    .logo-mark {
+      width: 38px; height: 38px;
+      background: var(--orange);
+      border-radius: 10px;
+      display: grid; place-items: center;
+      color: #000; font-weight: 900; font-size: 18px;
+      box-shadow: var(--orange-glow);
+      transition: transform .3s var(--ease);
+    }
+    .logo:hover .logo-mark { transform: rotate(-12deg) scale(1.05); }
+    .logo-text { background: linear-gradient(135deg, #fff, #a1a1aa); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    .nav-links {
+      display: flex; gap: 8px; align-items: center;
+      list-style: none;
+    }
+    .nav-links a {
+      padding: 8px 14px; border-radius: 10px;
+      color: var(--text-2); font-size: 14px; font-weight: 500;
+      transition: all .2s var(--ease);
+    }
+    .nav-links a:hover { color: var(--text); background: var(--bg-3); }
+
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .lang-btn {
+      padding: 8px 14px; border-radius: 10px;
+      border: 1px solid var(--line);
+      font-size: 13px; font-weight: 600;
+      color: var(--text-2);
+      transition: all .2s var(--ease);
+    }
+    .lang-btn:hover { color: var(--orange); border-color: var(--orange); }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px; border-radius: 12px;
+      background: var(--orange); color: #000;
+      font-weight: 700; font-size: 14px;
+      transition: all .25s var(--ease);
+      box-shadow: 0 4px 16px rgba(255,106,0,0.3);
+    }
+    .btn-primary:hover { background: var(--orange-2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,106,0,0.45); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px; border-radius: 12px;
+      border: 1px solid var(--line-2); color: var(--text);
+      font-weight: 600; font-size: 14px;
+      transition: all .2s var(--ease);
+    }
+    .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+
+    .menu-toggle { display: none; }
+
+    /* ============ Hero ============ */
+    .hero {
+      padding: 160px 0 100px;
+      position: relative;
+      min-height: 90vh;
+      display: flex; align-items: center;
+    }
+    .hero-inner { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border-radius: 100px;
+      background: var(--orange-soft);
+      border: 1px solid rgba(255,106,0,0.3);
+      color: var(--orange);
+      font-size: 13px; font-weight: 600;
+      margin-bottom: 24px;
+      animation: fadeUp .8s var(--ease) both;
+    }
+    .hero-badge .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--orange); box-shadow: 0 0 12px var(--orange);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 50% { opacity: .5; } }
+
+    .hero h1 {
+      font-size: clamp(40px, 6vw, 84px);
+      line-height: 1.05; font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: 24px;
+      animation: fadeUp .8s var(--ease) .1s both;
+    }
+    .hero h1 .accent {
+      background: linear-gradient(135deg, var(--orange), var(--orange-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      position: relative; display: inline-block;
+    }
+    .hero h1 .accent::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, transparent, var(--orange), transparent);
+      filter: blur(8px); opacity: .6;
+    }
+
+    .hero p.lead {
+      font-size: 18px; color: var(--text-2);
+      max-width: 540px; margin-bottom: 36px;
+      animation: fadeUp .8s var(--ease) .2s both;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; animation: fadeUp .8s var(--ease) .3s both; }
+
+    .hero-visual {
+      position: relative;
+      animation: fadeUp 1s var(--ease) .4s both;
+    }
+    .hero-card {
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--bg-3), var(--card));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute; inset: -50%;
+      background: conic-gradient(from 0deg, transparent, var(--orange), transparent 30%);
+      animation: spin 6s linear infinite;
+      opacity: .15;
+    }
+    .hero-card-inner {
+      position: relative; z-index: 1;
+      height: 100%;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hero-mini {
+      position: absolute;
+      background: var(--bg-3); border: 1px solid var(--line);
+      border-radius: 14px; padding: 14px 18px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 13px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
+    }
+    .hero-mini.m1 { top: -20px; left: -30px; animation: floatY 4s ease-in-out infinite; }
+    .hero-mini.m2 { bottom: 30px; right: -40px; animation: floatY 5s ease-in-out infinite reverse; }
+    .hero-mini.m3 { top: 40%; right: -60px; animation: floatY 6s ease-in-out infinite; }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    .mini-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--orange-soft); color: var(--orange);
+      display: grid; place-items: center; font-size: 16px;
+    }
+
+    .hero-tag-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    }
+    .hero-tag {
+      padding: 12px; border-radius: 12px;
+      background: rgba(0,0,0,0.4); backdrop-filter: blur(10px);
+      border: 1px solid var(--line);
+      font-size: 13px; font-weight: 600;
+      text-align: center;
+      color: var(--text-2);
+    }
+    .hero-tag.active { background: var(--orange); color: #000; border-color: var(--orange); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============ Marquee ============ */
+    .marquee {
+      padding: 30px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--bg-2);
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    }
+    .marquee-track {
+      display: flex; gap: 60px;
+      animation: scroll 30s linear infinite;
+      width: max-content;
+    }
+    .marquee-item {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 22px; font-weight: 700;
+      color: var(--text-2);
+      white-space: nowrap;
+    }
+    .marquee-item .star { color: var(--orange); font-size: 18px; }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    html[dir="rtl"] .marquee-track { animation-direction: reverse; }
+
+    /* ============ Sections common ============ */
+    section { padding: 100px 0; position: relative; }
+    .section-head { text-align: center; max-width: 720px; margin: 0 auto 64px; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 100px;
+      background: var(--orange-soft); color: var(--orange);
+      font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      margin-bottom: 18px;
+    }
+    .section-title {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 800; letter-spacing: -.02em;
+      line-height: 1.1; margin-bottom: 18px;
+    }
+    .section-sub { color: var(--text-2); font-size: 17px; }
+
+    /* ============ Services ============ */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .service {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all .35s var(--ease);
+      cursor: pointer;
+    }
+    .service::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--orange), transparent);
+      opacity: 0; transition: opacity .3s var(--ease);
+    }
+    .service:hover {
+      transform: translateY(-6px);
+      border-color: var(--orange);
+      background: linear-gradient(180deg, var(--card), rgba(255,106,0,0.05));
+    }
+    .service:hover::before { opacity: 1; }
+
+    .service-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: var(--orange-soft); color: var(--orange);
+      display: grid; place-items: center;
+      font-size: 26px;
+      margin-bottom: 22px;
+      transition: all .3s var(--ease);
+    }
+    .service:hover .service-icon {
+      background: var(--orange); color: #000;
+      transform: scale(1.05) rotate(-5deg);
+    }
+    .service h3 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+    .service p { color: var(--text-2); font-size: 15px; margin-bottom: 18px; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .service-tag {
+      padding: 4px 10px; border-radius: 6px;
+      background: var(--bg-3);
+      font-size: 11px; font-weight: 600;
+      color: var(--text-3);
+    }
+
+    /* ============ Portfolio ============ */
+    .portfolio-filters {
+      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .filter-btn {
+      padding: 10px 20px; border-radius: 100px;
+      background: var(--card); border: 1px solid var(--line);
+      font-size: 14px; font-weight: 600; color: var(--text-2);
+      transition: all .2s var(--ease);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--orange); color: #000; border-color: var(--orange);
+    }
+    .portfolio-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .portfolio-item {
+      aspect-ratio: 4/5;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: var(--card);
+      border: 1px solid var(--line);
+      transition: all .3s var(--ease);
+    }
+    .portfolio-item:hover { transform: scale(1.02); border-color: var(--orange); }
+    .portfolio-item:nth-child(1) { background: linear-gradient(135deg, #1a1a1a 0%, #2a1a0a 100%); }
+    .portfolio-item:nth-child(2) { background: linear-gradient(135deg, #1a0a1a 0%, #2a1a2a 100%); }
+    .portfolio-item:nth-child(3) { background: linear-gradient(135deg, #0a1a1a 0%, #1a2a2a 100%); }
+    .portfolio-item:nth-child(4) { background: linear-gradient(135deg, #2a1a0a 0%, #3a2a1a 100%); }
+    .portfolio-item:nth-child(5) { background: linear-gradient(135deg, #1a1a2a 0%, #2a2a3a 100%); }
+    .portfolio-item:nth-child(6) { background: linear-gradient(135deg, #2a0a0a 0%, #3a1a1a 100%); }
+
+    .portfolio-shape {
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      font-size: 80px; font-weight: 900;
+      color: var(--orange); opacity: .25;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .portfolio-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.95) 0%, transparent 50%);
+      padding: 24px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      opacity: 0; transition: opacity .3s var(--ease);
+    }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+    .portfolio-overlay h4 { font-size: 18px; margin-bottom: 4px; }
+    .portfolio-overlay p { color: var(--orange); font-size: 12px; font-weight: 600; }
+    .portfolio-badge {
+      position: absolute; top: 16px;
+      padding: 5px 12px; border-radius: 100px;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+      font-size: 11px; font-weight: 600; color: var(--text);
+      border: 1px solid var(--line);
+    }
+    html[dir="rtl"] .portfolio-badge { right: 16px; }
+    html[dir="ltr"] .portfolio-badge { left: 16px; }
+
+    /* ============ Stats ============ */
+    .stats-section {
+      background: linear-gradient(135deg, var(--bg-2), var(--bg-3));
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    }
+    .stat {
+      text-align: center;
+      padding: 30px 20px;
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid var(--line);
+      transition: all .3s var(--ease);
+    }
+    .stat:hover { border-color: var(--orange); transform: translateY(-4px); }
+    .stat-num {
+      font-size: 56px; font-weight: 800;
+      background: linear-gradient(135deg, var(--orange), var(--orange-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      letter-spacing: -.03em;
+      line-height: 1;
+      margin-bottom: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .stat-label { color: var(--text-2); font-size: 14px; font-weight: 500; }
+
+    /* ============ Pricing ============ */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .price-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      position: relative;
+      transition: all .3s var(--ease);
+    }
+    .price-card:hover { transform: translateY(-6px); border-color: var(--orange); }
+    .price-card.featured {
+      background: linear-gradient(180deg, rgba(255,106,0,0.1), var(--card));
+      border-color: var(--orange);
+      box-shadow: var(--orange-glow);
+    }
+    .price-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      padding: 5px 16px; border-radius: 100px;
+      background: var(--orange); color: #000;
+      font-size: 12px; font-weight: 700;
+    }
+    .price-name { font-size: 14px; font-weight: 600; color: var(--orange); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
+    .price-title { font-size: 28px; font-weight: 800; margin-bottom: 16px; }
+    .price-amount { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; }
+    .price-amount .num { font-size: 52px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; }
+    .price-amount .curr { font-size: 22px; color: var(--text-2); }
+    .price-period { color: var(--text-3); font-size: 14px; margin-bottom: 28px; }
+    .price-features { list-style: none; margin-bottom: 28px; }
+    .price-features li {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 0;
+      font-size: 14px; color: var(--text-2);
+      border-bottom: 1px solid var(--line);
+    }
+    .price-features li:last-child { border: none; }
+    .price-features .check {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--orange-soft); color: var(--orange);
+      display: grid; place-items: center;
+      font-size: 11px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .price-cta {
+      width: 100%; padding: 14px;
+      border-radius: 12px;
+      background: var(--bg-3); border: 1px solid var(--line);
+      color: var(--text); font-weight: 700; font-size: 15px;
+      transition: all .2s var(--ease);
+    }
+    .price-card.featured .price-cta { background: var(--orange); color: #000; border-color: var(--orange); }
+    .price-cta:hover { background: var(--orange); color: #000; border-color: var(--orange); }
+
+    /* ============ Testimonials ============ */
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .testimonial {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      position: relative;
+      transition: all .3s var(--ease);
+    }
+    .testimonial:hover { border-color: var(--orange); transform: translateY(-4px); }
+    .testimonial::before {
+      content: '"';
+      position: absolute; top: 12px;
+      font-size: 80px; font-weight: 900;
+      color: var(--orange); opacity: .2;
+      font-family: serif;
+      line-height: 1;
+    }
+    html[dir="rtl"] .testimonial::before { right: 24px; }
+    html[dir="ltr"] .testimonial::before { left: 24px; }
+    .testimonial-stars { color: var(--orange); margin-bottom: 14px; font-size: 14px; }
+    .testimonial-text {
+      font-size: 15px; color: var(--text-2);
+      margin-bottom: 24px; line-height: 1.7;
+      position: relative; z-index: 1;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--orange); color: #000;
+      display: grid; place-items: center;
+      font-weight: 800; font-size: 16px;
+    }
+    .author-name { font-weight: 700; font-size: 15px; }
+    .author-role { color: var(--text-3); font-size: 12px; }
+
+    /* ============ Contact ============ */
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: start;
+    }
+    .contact-info h2 {
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 800; letter-spacing: -.02em;
+      line-height: 1.1; margin-bottom: 18px;
+    }
+    .contact-info p { color: var(--text-2); font-size: 16px; margin-bottom: 36px; }
+
+    .contact-methods { display: flex; flex-direction: column; gap: 14px; margin-bottom: 36px; }
+    .contact-method {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 20px; border-radius: var(--radius);
+      background: var(--card); border: 1px solid var(--line);
+      transition: all .25s var(--ease);
+    }
+    .contact-method:hover { border-color: var(--orange); transform: translateX(4px); }
+    html[dir="rtl"] .contact-method:hover { transform: translateX(-4px); }
+    .contact-method-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--orange-soft); color: var(--orange);
+      display: grid; place-items: center; font-size: 20px;
+      flex-shrink: 0;
+    }
+    .contact-method-info .label { font-size: 12px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+    .contact-method-info .value { font-size: 16px; font-weight: 600; color: var(--text); }
+
+    .contact-socials { display: flex; gap: 10px; }
+    .social-btn {
+      width: 44px; height: 44px; border-radius: 12px;
+      border: 1px solid var(--line); background: var(--card);
+      display: grid; place-items: center;
+      color: var(--text-2);
+      transition: all .25s var(--ease);
+    }
+    .social-btn:hover { background: var(--orange); color: #000; border-color: var(--orange); transform: translateY(-3px); }
+
+    .contact-form {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-field { margin-bottom: 14px; }
+    .form-field label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: var(--text-2); margin-bottom: 8px;
+    }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%; padding: 14px 16px;
+      background: var(--bg-3); border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--text); font-family: inherit; font-size: 15px;
+      transition: all .2s var(--ease);
+    }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+      outline: none; border-color: var(--orange);
+      background: var(--bg-2);
+    }
+    .form-field textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      width: 100%; padding: 16px;
+      border-radius: 12px;
+      background: var(--orange); color: #000;
+      font-weight: 700; font-size: 15px;
+      margin-top: 10px;
+      transition: all .25s var(--ease);
+      box-shadow: 0 4px 16px rgba(255,106,0,0.3);
+    }
+    .form-submit:hover:not(:disabled) { background: var(--orange-2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,106,0,0.45); }
+    .form-submit:disabled { opacity: .6; cursor: not-allowed; }
+    .form-status {
+      margin-top: 14px; padding: 12px 16px;
+      border-radius: 10px; font-size: 14px;
+      display: none;
+    }
+    .form-status.success { display: block; background: rgba(34,197,94,0.1); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+    .form-status.error { display: block; background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+
+    /* ============ CTA Banner ============ */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--orange), #ff3d00);
+      border-radius: var(--radius-lg);
+      padding: 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 80px;
+    }
+    .cta-banner::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(255,255,255,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(0,0,0,0.2) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .cta-banner h2 {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800; color: #000;
+      letter-spacing: -.02em; margin-bottom: 14px;
+      position: relative;
+    }
+    .cta-banner p {
+      color: rgba(0,0,0,0.7); font-size: 17px;
+      margin-bottom: 28px; position: relative;
+      font-weight: 500;
+    }
+    .cta-banner .btn-primary {
+      background: #000; color: #fff;
+      position: relative;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    .cta-banner .btn-primary:hover { background: #1a1a1a; }
+
+    /* ============ Footer ============ */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 60px 0 30px;
+      background: var(--bg-2);
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-brand { max-width: 320px; }
+    .footer-brand p { color: var(--text-2); font-size: 14px; margin-top: 16px; }
+    .footer-col h5 {
+      font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--text); margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a {
+      color: var(--text-2); font-size: 14px;
+      transition: color .2s var(--ease);
+    }
+    .footer-col a:hover { color: var(--orange); }
+    .footer-bottom {
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+      color: var(--text-3); font-size: 13px;
+      flex-wrap: wrap; gap: 10px;
+    }
+
+    /* ============ WhatsApp Float ============ */
+    .wa-float {
+      position: fixed; bottom: 24px; z-index: 90;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #25d366; color: #fff;
+      display: grid; place-items: center;
+      font-size: 30px;
+      box-shadow: 0 10px 30px rgba(37,211,102,0.4);
+      transition: all .3s var(--ease);
+      animation: wa-bounce 2s ease-in-out infinite;
+    }
+    html[dir="rtl"] .wa-float { left: 24px; }
+    html[dir="ltr"] .wa-float { right: 24px; }
+    .wa-float:hover { transform: scale(1.1); }
+    @keyframes wa-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ============ Reveal Animation ============ */
+    .reveal { opacity: 0; transform: translateY(40px); transition: all .8s var(--ease); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ============ Responsive ============ */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .menu-toggle { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero { padding: 130px 0 60px; min-height: auto; }
+      .hero-visual { max-width: 400px; margin: 0 auto; }
+      .hero-mini.m1, .hero-mini.m2, .hero-mini.m3 { display: none; }
+      .portfolio-grid, .pricing-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
+      .form-row { grid-template-columns: 1fr; }
+      section { padding: 70px 0; }
+      .cta-banner { padding: 40px 24px; }
+      .stat-num { font-size: 42px; }
+    }
+
+    @media (max-width: 500px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10,10,10,0.98); backdrop-filter: blur(20px);
+      z-index: 99; padding: 90px 24px 30px;
+      display: none; flex-direction: column; gap: 12px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      padding: 16px 20px; border-radius: 12px;
+      background: var(--card); border: 1px solid var(--line);
+      font-size: 16px; font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-effects"></div>
+  <div class="grid-bg"></div>
+
+  <!-- Navbar -->
+  <nav class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">S</div>
+        <span class="logo-text">Shendy<span style="color: var(--orange);">.</span>Studio</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services" data-i18n="nav.services">الخدمات</a></li>
+        <li><a href="#portfolio" data-i18n="nav.work">أعمالنا</a></li>
+        <li><a href="#pricing" data-i18n="nav.pricing">الباقات</a></li>
+        <li><a href="#testimonials" data-i18n="nav.testimonials">آراء العملاء</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">تواصل</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="lang-btn" id="langToggle">EN</button>
+        <a href="#contact" class="btn-primary" data-i18n="nav.cta">ابدأ مشروعك</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services" data-i18n="nav.services">الخدمات</a>
+    <a href="#portfolio" data-i18n="nav.work">أعمالنا</a>
+    <a href="#pricing" data-i18n="nav.pricing">الباقات</a>
+    <a href="#testimonials" data-i18n="nav.testimonials">آراء العملاء</a>
+    <a href="#contact" data-i18n="nav.contact">تواصل</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <div class="hero-badge">
+          <span class="dot"></span>
+          <span data-i18n="hero.badge">متاحون لمشاريع جديدة</span>
+        </div>
+        <h1>
+          <span data-i18n="hero.title1">نصمم</span>
+          <span class="accent" data-i18n="hero.title2">هويات بصرية</span>
+          <span data-i18n="hero.title3">تترك أثراً</span>
+        </h1>
+        <p class="lead" data-i18n="hero.lead">
+          استوديو شندي وكالة إبداعية متخصصة في تصميم السوشيال ميديا، الهويات البصرية، البانرات الإعلانية، والموشن جرافيك. نحوّل أفكارك إلى تجارب بصرية تخطف الأنظار.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">
+            <span data-i18n="hero.cta1">ابدأ مشروعك الآن</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#portfolio" class="btn-ghost" data-i18n="hero.cta2">شاهد أعمالنا</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-inner">
+            <div>
+              <div style="font-size: 60px; font-weight: 900; color: var(--orange); line-height: 1; letter-spacing: -.04em; font-family: 'Space Grotesk', sans-serif;">S<span style="color: #fff;">.</span></div>
+              <div style="margin-top: 10px; font-size: 13px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing: .15em;">Creative Studio</div>
+            </div>
+            <div class="hero-tag-grid">
+              <div class="hero-tag active">Branding</div>
+              <div class="hero-tag">Social</div>
+              <div class="hero-tag">Motion</div>
+              <div class="hero-tag active">UI/UX</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-mini m1">
+          <div class="mini-icon">★</div>
+          <div>
+            <div style="font-weight: 700;" data-i18n="hero.mini1">+150 مشروع</div>
+            <div style="color: var(--text-3); font-size: 11px;" data-i18n="hero.mini1sub">تم تسليمها</div>
+          </div>
+        </div>
+        <div class="hero-mini m2">
+          <div class="mini-icon">✓</div>
+          <div>
+            <div style="font-weight: 700;" data-i18n="hero.mini2">عملاء سعداء</div>
+            <div style="color: var(--text-3); font-size: 11px;" data-i18n="hero.mini2sub">98% رضا</div>
+          </div>
+        </div>
+        <div class="hero-mini m3">
+          <div class="mini-icon">⚡</div>
+          <div>
+            <div style="font-weight: 700;" data-i18n="hero.mini3">تسليم سريع</div>
+            <div style="color: var(--text-3); font-size: 11px;" data-i18n="hero.mini3sub">في الوقت المحدد</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <div class="marquee-item"><span class="star">✦</span><span data-i18n="marq.1">براندينج إبداعي</span></div>
+      <div class="marquee-item"><span class="star">✦</span><span data-i18n="marq.2">سوشيال ميديا ديزاين</span></div>
+      <div class="marquee-item"><span class="star">✦</span><span data-i18n="marq.3">موشن جرافيك</span></div>
+      <div class="marquee-item"><span class="star">✦</span><span data-i18n="marq.4">بانرات إعلانية</span></div>
+      <div class="marquee-item"><span class="star">✦</span><span data-i18n="marq.5">تصميم لوجو</span></div>
+      <div class="marquee-item"><span class="star">✦</span><span data-i18n="marq.6">واجهات تطبيقات</span></div>
+      <!-- duplicate for seamless loop -->
+      <div class="marquee-item"><span class="star">✦</span><span data-i18n="marq.1">براندينج إبداعي</span></div>
+      <div class="marquee-item"><span class="star">✦</span><span data-i18n="marq.2">سوشيال ميديا ديزاين</span></div>
+      <div class="marquee-item"><span class="star">✦</span><span data-i18n="marq.3">موشن جرافيك</span></div>
+      <div class="marquee-item"><span class="star">✦</span><span data-i18n="marq.4">بانرات إعلانية</span></div>
+      <div class="marquee-item"><span class="star">✦</span><span data-i18n="marq.5">تصميم لوجو</span></div>
+      <div class="marquee-item"><span class="star">✦</span><span data-i18n="marq.6">واجهات تطبيقات</span></div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label" data-i18n="services.label">خدماتنا</span>
+        <h2 class="section-title" data-i18n="services.title">حلول تصميمية متكاملة لعلامتك التجارية</h2>
+        <p class="section-sub" data-i18n="services.sub">من الفكرة الأولى للتنفيذ النهائي، نقدّم كل ما تحتاجه لبناء حضور بصري قوي ومميّز.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service reveal">
+          <div class="service-icon">📱</div>
+          <h3 data-i18n="srv.s1.t">Social Media Design</h3>
+          <p data-i18n="srv.s1.d">تصاميم سوشيال ميديا احترافية تجذب المتابعين وتعزّز التفاعل مع براندك على جميع المنصات.</p>
+          <div class="service-tags">
+            <span class="service-tag">Posts</span>
+            <span class="service-tag">Stories</span>
+            <span class="service-tag">Reels</span>
+            <span class="service-tag">Carousels</span>
+          </div>
+        </div>
+
+        <div class="service reveal">
+          <div class="service-icon">✨</div>
+          <h3 data-i18n="srv.s2.t">Branding & Identity</h3>
+          <p data-i18n="srv.s2.d">هويات بصرية كاملة من الصفر، نبني شخصية بصرية فريدة تعكس قيم علامتك التجارية وتميّزها عن المنافسين.</p>
+          <div class="service-tags">
+            <span class="service-tag">Logo</span>
+            <span class="service-tag">Colors</span>
+            <span class="service-tag">Typography</span>
+            <span class="service-tag">Guidelines</span>
+          </div>
+        </div>
+
+        <div class="service reveal">
+          <div class="service-icon">🎯</div>
+          <h3 data-i18n="srv.s3.t">Banner & Ads Design</h3>
+          <p data-i18n="srv.s3.d">بانرات إعلانية مدروسة تحقق نتائج فعلية، نصمم لحملاتك الإعلانية بصريات تحوّل المشاهدين لعملاء.</p>
+          <div class="service-tags">
+            <span class="service-tag">Web Ads</span>
+            <span class="service-tag">Print</span>
+            <span class="service-tag">Outdoor</span>
+            <span class="service-tag">Banners</span>
+          </div>
+        </div>
+
+        <div class="service reveal">
+          <div class="service-icon">🎬</div>
+          <h3 data-i18n="srv.s4.t">Motion Graphics</h3>
+          <p data-i18n="srv.s4.d">جرافيك متحرّك يضيف حياة لمحتواك، فيديوهات تعريفية وموشن جرافيك يجذب الانتباه ويوصل رسالتك بفعالية.</p>
+          <div class="service-tags">
+            <span class="service-tag">Intro</span>
+            <span class="service-tag">Promo</span>
+            <span class="service-tag">Explainer</span>
+            <span class="service-tag">Animation</span>
+          </div>
+        </div>
+
+        <div class="service reveal">
+          <div class="service-icon">💎</div>
+          <h3 data-i18n="srv.s5.t">Logo Design</h3>
+          <p data-i18n="srv.s5.d">لوجوهات احترافية مميّزة، نصمم رمز يحكي قصة براندك ويبقى راسخ في أذهان عملائك لسنوات.</p>
+          <div class="service-tags">
+            <span class="service-tag">Minimal</span>
+            <span class="service-tag">Modern</span>
+            <span class="service-tag">Wordmark</span>
+            <span class="service-tag">Iconic</span>
+          </div>
+        </div>
+
+        <div class="service reveal">
+          <div class="service-icon">🎨</div>
+          <h3 data-i18n="srv.s6.t">UI / UX Design</h3>
+          <p data-i18n="srv.s6.d">تجارب رقمية سلسة وممتعة، نصمم واجهات تطبيقات ومواقع تركّز على المستخدم وتحقق أهداف عملك.</p>
+          <div class="service-tags">
+            <span class="service-tag">Mobile</span>
+            <span class="service-tag">Web</span>
+            <span class="service-tag">Dashboard</span>
+            <span class="service-tag">Wireframe</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio" style="background: var(--bg-2);">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label" data-i18n="port.label">أعمالنا</span>
+        <h2 class="section-title" data-i18n="port.title">مشاريع نفتخر بها</h2>
+        <p class="section-sub" data-i18n="port.sub">مختارات من آخر أعمالنا، كل مشروع يحكي قصة فريدة لعلامة تجارية مميّزة.</p>
+      </div>
+
+      <div class="portfolio-filters reveal">
+        <button class="filter-btn active" data-i18n="port.f1">الكل</button>
+        <button class="filter-btn" data-i18n="port.f2">Branding</button>
+        <button class="filter-btn" data-i18n="port.f3">Social Media</button>
+        <button class="filter-btn" data-i18n="port.f4">Motion</button>
+        <button class="filter-btn" data-i18n="port.f5">UI/UX</button>
+      </div>
+
+      <div class="portfolio-grid">
+        <div class="portfolio-item reveal">
+          <div class="portfolio-badge">Branding</div>
+          <div class="portfolio-shape">01</div>
+          <div class="portfolio-overlay">
+            <h4 data-i18n="port.p1.t">Nova Coffee Brand</h4>
+            <p data-i18n="port.p1.s">Identity Design · 2025</p>
+          </div>
+        </div>
+        <div class="portfolio-item reveal">
+          <div class="portfolio-badge">Social</div>
+          <div class="portfolio-shape">02</div>
+          <div class="portfolio-overlay">
+            <h4 data-i18n="port.p2.t">Luna Fashion</h4>
+            <p data-i18n="port.p2.s">Social Campaign · 2025</p>
+          </div>
+        </div>
+        <div class="portfolio-item reveal">
+          <div class="portfolio-badge">Motion</div>
+          <div class="portfolio-shape">03</div>
+          <div class="portfolio-overlay">
+            <h4 data-i18n="port.p3.t">Tech Startup Intro</h4>
+            <p data-i18n="port.p3.s">Motion Graphics · 2025</p>
+          </div>
+        </div>
+        <div class="portfolio-item reveal">
+          <div class="portfolio-badge">UI/UX</div>
+          <div class="portfolio-shape">04</div>
+          <div class="portfolio-overlay">
+            <h4 data-i18n="port.p4.t">Fitness App</h4>
+            <p data-i18n="port.p4.s">Mobile UI · 2025</p>
+          </div>
+        </div>
+        <div class="portfolio-item reveal">
+          <div class="portfolio-badge">Branding</div>
+          <div class="portfolio-shape">05</div>
+          <div class="portfolio-overlay">
+            <h4 data-i18n="port.p5.t">Pulse Music Label</h4>
+            <p data-i18n="port.p5.s">Brand Identity · 2024</p>
+          </div>
+        </div>
+        <div class="portfolio-item reveal">
+          <div class="portfolio-badge">Ads</div>
+          <div class="portfolio-shape">06</div>
+          <div class="portfolio-overlay">
+            <h4 data-i18n="port.p6.t">Summer Campaign</h4>
+            <p data-i18n="port.p6.s">Banner Ads · 2024</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;" class="reveal">
+        <a href="#contact" class="btn-ghost">
+          <span data-i18n="port.cta">شاهد المزيد من الأعمال</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat reveal">
+          <div class="stat-num" data-count="150">0</div>
+          <div class="stat-label" data-i18n="stats.s1">مشروع منجز</div>
+        </div>
+        <div class="stat reveal">
+          <div class="stat-num" data-count="85">0</div>
+          <div class="stat-label" data-i18n="stats.s2">عميل سعيد</div>
+        </div>
+        <div class="stat reveal">
+          <div class="stat-num" data-count="5">0</div>
+          <div class="stat-label" data-i18n="stats.s3">سنوات خبرة</div>
+        </div>
+        <div class="stat reveal">
+          <div class="stat-num" data-count="12">0</div>
+          <div class="stat-label" data-i18n="stats.s4">جائزة وتكريم</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label" data-i18n="price.label">الباقات</span>
+        <h2 class="section-title" data-i18n="price.title">باقات مرنة تناسب جميع الاحتياجات</h2>
+        <p class="section-sub" data-i18n="price.sub">اختر الباقة المناسبة لمشروعك، وكلها قابلة للتخصيص حسب احتياجاتك.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card reveal">
+          <div class="price-name" data-i18n="price.b1.n">Starter</div>
+          <div class="price-title" data-i18n="price.b1.t">باقة البداية</div>
+          <div class="price-amount">
+            <span class="num">1500</span>
+            <span class="curr">EGP</span>
+          </div>
+          <div class="price-period" data-i18n="price.period">شهرياً</div>
+          <ul class="price-features">
+            <li><span class="check">✓</span><span data-i18n="price.b1.f1">12 تصميم سوشيال ميديا</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b1.f2">تصميم كافر شهري</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b1.f3">مراجعتين على كل تصميم</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b1.f4">تسليم خلال 48 ساعة</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b1.f5">دعم فني عبر الواتساب</span></li>
+          </ul>
+          <button class="price-cta" data-i18n="price.cta">ابدأ الآن</button>
+        </div>
+
+        <div class="price-card featured reveal">
+          <div class="price-badge" data-i18n="price.badge">الأكثر طلباً</div>
+          <div class="price-name" data-i18n="price.b2.n">Growth</div>
+          <div class="price-title" data-i18n="price.b2.t">باقة النمو</div>
+          <div class="price-amount">
+            <span class="num">3500</span>
+            <span class="curr">EGP</span>
+          </div>
+          <div class="price-period" data-i18n="price.period">شهرياً</div>
+          <ul class="price-features">
+            <li><span class="check">✓</span><span data-i18n="price.b2.f1">30 تصميم سوشيال ميديا</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b2.f2">5 موشن جرافيك ريلز</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b2.f3">تصميم بانرات إعلانية</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b2.f4">مراجعات غير محدودة</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b2.f5">مدير حساب مخصص</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b2.f6">تقرير أداء شهري</span></li>
+          </ul>
+          <button class="price-cta" data-i18n="price.cta">ابدأ الآن</button>
+        </div>
+
+        <div class="price-card reveal">
+          <div class="price-name" data-i18n="price.b3.n">Premium</div>
+          <div class="price-title" data-i18n="price.b3.t">باقة الأعمال</div>
+          <div class="price-amount">
+            <span class="num">7000</span>
+            <span class="curr">EGP</span>
+          </div>
+          <div class="price-period" data-i18n="price.period">شهرياً</div>
+          <ul class="price-features">
+            <li><span class="check">✓</span><span data-i18n="price.b3.f1">تصاميم غير محدودة</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b3.f2">هوية بصرية كاملة</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b3.f3">موشن جرافيك متقدم</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b3.f4">UI/UX للتطبيقات</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b3.f5">دعم على مدار الساعة</span></li>
+            <li><span class="check">✓</span><span data-i18n="price.b3.f6">استشارات تسويقية</span></li>
+          </ul>
+          <button class="price-cta" data-i18n="price.cta">ابدأ الآن</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" style="background: var(--bg-2);">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label" data-i18n="tst.label">آراء العملاء</span>
+        <h2 class="section-title" data-i18n="tst.title">ماذا يقول عنا عملاؤنا؟</h2>
+        <p class="section-sub" data-i18n="tst.sub">شهادات من شركات وعلامات تجارية وثقت في خبرتنا.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text" data-i18n="tst.t1.txt">"تجربة استثنائية مع فريق Shendy Studio. الاحترافية، الالتزام بالمواعيد، وجودة التصاميم تفوّقت على توقعاتي. نتائج تسويقية رائعة على السوشيال ميديا منذ بداية تعاوننا."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">A</div>
+            <div>
+              <div class="author-name" data-i18n="tst.t1.n">أحمد محمد</div>
+              <div class="author-role" data-i18n="tst.t1.r">مدير تسويق · Nova Café</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text" data-i18n="tst.t2.txt">"الهوية البصرية اللي صمموها لبراندنا كانت بمستوى عالمي. كل تفصيلة مدروسة وكل عنصر له معنى. أنصح أي صاحب براند يتعامل معاهم بدون تردد."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">S</div>
+            <div>
+              <div class="author-name" data-i18n="tst.t2.n">سارة عبدالله</div>
+              <div class="author-role" data-i18n="tst.t2.r">CEO · Luna Fashion</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text" data-i18n="tst.t3.txt">"تعاملت مع كذا استوديو قبل كده، بس فعلاً Shendy Studio مختلفين. الإبداع، السرعة، والمتابعة المستمرة خلّوا التجربة سلسة جداً والنتيجة فاقت المطلوب."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">M</div>
+            <div>
+              <div class="author-name" data-i18n="tst.t3.n">محمود حسن</div>
+              <div class="author-role" data-i18n="tst.t3.r">Founder · Pulse Music</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="cta-banner reveal">
+        <h2 data-i18n="cta.title">جاهز نبدأ مشروعك القادم؟</h2>
+        <p data-i18n="cta.sub">احكيلنا عن فكرتك ودعنا نحوّلها لتصميم يخطف الأنظار.</p>
+        <a href="#contact-form" class="btn-primary">
+          <span data-i18n="cta.btn">احصل على عرض سعر مجاني</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <h2 data-i18n="contact.title">خلينا نتكلم</h2>
+          <p data-i18n="contact.sub">سواء عندك سؤال، فكرة مشروع، أو محتاج استشارة، فريقنا جاهز للرد عليك خلال ساعات.</p>
+
+          <div class="contact-methods">
+            <a href="https://wa.me/201000000000" target="_blank" class="contact-method">
+              <div class="contact-method-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.101-.473-.15-.673.15-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.484-1.77-1.66-2.07-.174-.3-.019-.465.13-.615.136-.135.301-.345.451-.523.146-.181.194-.301.297-.496.1-.21.049-.375-.025-.524-.075-.15-.672-1.62-.922-2.206-.24-.584-.487-.51-.672-.51-.172-.015-.371-.015-.571-.015-.2 0-.523.074-.797.359-.273.3-1.045 1.02-1.045 2.475s1.07 2.865 1.219 3.075c.149.18 2.095 3.195 5.076 4.485.709.3 1.26.48 1.689.629.711.227 1.359.195 1.869.121.571-.091 1.759-.721 2.006-1.413.255-.7.255-1.296.18-1.422-.074-.135-.27-.21-.57-.345m-5.446 7.443h-.016c-1.77 0-3.524-.48-5.055-1.38l-.36-.214-3.75.975 1.005-3.645-.239-.375a9.869 9.869 0 0 1-1.516-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.641 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.412-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+              </div>
+              <div class="contact-method-info">
+                <div class="label">WhatsApp</div>
+                <div class="value" id="waNumber">+20 100 000 0000</div>
+              </div>
+            </a>
+
+            <a href="mailto:hello@shendystudio.com" class="contact-method">
+              <div class="contact-method-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div class="contact-method-info">
+                <div class="label" data-i18n="contact.email">البريد الإلكتروني</div>
+                <div class="value">hello@shendystudio.com</div>
+              </div>
+            </a>
+
+            <div class="contact-method">
+              <div class="contact-method-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="contact-method-info">
+                <div class="label" data-i18n="contact.hours">ساعات العمل</div>
+                <div class="value" data-i18n="contact.hoursVal">السبت - الخميس · 10 ص - 8 م</div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h5 style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; color: var(--text-2);" data-i18n="contact.follow">تابعنا على</h5>
+            <div class="contact-socials">
+              <a href="#" class="social-btn" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+              <a href="#" class="social-btn" aria-label="Behance"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.219-2.477-2.219-1.466 0-2.277.768-2.488 2.219zm-9.574 6.988H0V5.021h6.953c5.476.081 5.58 5.444 2.72 6.906 3.461 1.26 3.577 8.061-3.207 8.061zM3 11h3.584c2.508 0 2.906-3-.312-3H3v3zm3.391 3H3v3.016h3.341c3.055 0 2.868-3.016.05-3.016z"/></svg></a>
+              <a href="#" class="social-btn" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg></a>
+              <a href="#" class="social-btn" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form reveal" id="contactForm">
+          <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 6px;" data-i18n="form.title">ابدأ مشروعك</h3>
+          <p style="color: var(--text-2); font-size: 14px; margin-bottom: 24px;" data-i18n="form.sub">املأ النموذج وسنتواصل معك في أقرب وقت.</p>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label data-i18n="form.name">الاسم</label>
+              <input type="text" name="name" required placeholder="..." />
+            </div>
+            <div class="form-field">
+              <label data-i18n="form.phone">رقم الهاتف</label>
+              <input type="tel" name="phone" required placeholder="+20" />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label data-i18n="form.email">البريد الإلكتروني</label>
+            <input type="email" name="email" required placeholder="you@example.com" />
+          </div>
+
+          <div class="form-field">
+            <label data-i18n="form.service">نوع الخدمة</label>
+            <select name="service" required>
+              <option value="" data-i18n="form.service.opt">اختر الخدمة المطلوبة</option>
+              <option value="social" data-i18n="srv.s1.t">Social Media Design</option>
+              <option value="branding" data-i18n="srv.s2.t">Branding & Identity</option>
+              <option value="ads" data-i18n="srv.s3.t">Banner & Ads Design</option>
+              <option value="motion" data-i18n="srv.s4.t">Motion Graphics</option>
+              <option value="logo" data-i18n="srv.s5.t">Logo Design</option>
+              <option value="uiux" data-i18n="srv.s6.t">UI / UX Design</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label data-i18n="form.message">تفاصيل المشروع</label>
+            <textarea name="message" required placeholder="..."></textarea>
+          </div>
+
+          <button type="submit" class="form-submit" id="submitBtn">
+            <span data-i18n="form.submit">إرسال الطلب</span>
+          </button>
+
+          <div class="form-status" id="formStatus"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-mark">S</div>
+            <span class="logo-text">Shendy<span style="color: var(--orange);">.</span>Studio</span>
+          </a>
+          <p data-i18n="footer.about">وكالة تصميم إبداعية متخصصة في بناء هويات بصرية مميّزة وحلول تصميم متكاملة لعلامتك التجارية.</p>
+        </div>
+        <div class="footer-col">
+          <h5 data-i18n="footer.col1">الشركة</h5>
+          <ul>
+            <li><a href="#services" data-i18n="nav.services">الخدمات</a></li>
+            <li><a href="#portfolio" data-i18n="nav.work">أعمالنا</a></li>
+            <li><a href="#pricing" data-i18n="nav.pricing">الباقات</a></li>
+            <li><a href="#contact" data-i18n="nav.contact">تواصل</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-i18n="footer.col2">الخدمات</h5>
+          <ul>
+            <li><a href="#services" data-i18n="srv.s1.t">Social Media</a></li>
+            <li><a href="#services" data-i18n="srv.s2.t">Branding</a></li>
+            <li><a href="#services" data-i18n="srv.s3.t">Ads Design</a></li>
+            <li><a href="#services" data-i18n="srv.s4.t">Motion Graphics</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-i18n="footer.col3">تواصل معنا</h5>
+          <ul>
+            <li><a href="mailto:hello@shendystudio.com">hello@shendystudio.com</a></li>
+            <li><a href="https://wa.me/201000000000">+20 100 000 0000</a></li>
+            <li><a href="#" data-i18n="footer.location">القاهرة، مصر</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Shendy Studio. <span data-i18n="footer.rights">جميع الحقوق محفوظة.</span></div>
+        <div data-i18n="footer.made">صُمم بحب من قبل فريق Shendy Studio</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/201000000000" target="_blank" class="wa-float" aria-label="WhatsApp">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.101-.473-.15-.673.15-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.484-1.77-1.66-2.07-.174-.3-.019-.465.13-.615.136-.135.301-.345.451-.523.146-.181.194-.301.297-.496.1-.21.049-.375-.025-.524-.075-.15-.672-1.62-.922-2.206-.24-.584-.487-.51-.672-.51-.172-.015-.371-.015-.571-.015-.2 0-.523.074-.797.359-.273.3-1.045 1.02-1.045 2.475s1.07 2.865 1.219 3.075c.149.18 2.095 3.195 5.076 4.485.709.3 1.26.48 1.689.629.711.227 1.359.195 1.869.121.571-.091 1.759-.721 2.006-1.413.255-.7.255-1.296.18-1.422-.074-.135-.27-.21-.57-.345m-5.446 7.443h-.016c-1.77 0-3.524-.48-5.055-1.38l-.36-.214-3.75.975 1.005-3.645-.239-.375a9.869 9.869 0 0 1-1.516-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.641 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.412-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  </a>
+
+  <script>
+    /* ============ Translations ============ */
+    const translations = {
+      ar: {
+        'nav.services': 'الخدمات',
+        'nav.work': 'أعمالنا',
+        'nav.pricing': 'الباقات',
+        'nav.testimonials': 'آراء العملاء',
+        'nav.contact': 'تواصل',
+        'nav.cta': 'ابدأ مشروعك',
+        'hero.badge': 'متاحون لمشاريع جديدة',
+        'hero.title1': 'نصمم',
+        'hero.title2': 'هويات بصرية',
+        'hero.title3': 'تترك أثراً',
+        'hero.lead': 'استوديو شندي وكالة إبداعية متخصصة في تصميم السوشيال ميديا، الهويات البصرية، البانرات الإعلانية، والموشن جرافيك. نحوّل أفكارك إلى تجارب بصرية تخطف الأنظار.',
+        'hero.cta1': 'ابدأ مشروعك الآن',
+        'hero.cta2': 'شاهد أعمالنا',
+        'hero.mini1': '+150 مشروع',
+        'hero.mini1sub': 'تم تسليمها',
+        'hero.mini2': 'عملاء سعداء',
+        'hero.mini2sub': '98% رضا',
+        'hero.mini3': 'تسليم سريع',
+        'hero.mini3sub': 'في الوقت المحدد',
+        'marq.1': 'براندينج إبداعي',
+        'marq.2': 'سوشيال ميديا ديزاين',
+        'marq.3': 'موشن جرافيك',
+        'marq.4': 'بانرات إعلانية',
+        'marq.5': 'تصميم لوجو',
+        'marq.6': 'واجهات تطبيقات',
+        'services.label': 'خدماتنا',
+        'services.title': 'حلول تصميمية متكاملة لعلامتك التجارية',
+        'services.sub': 'من الفكرة الأولى للتنفيذ النهائي، نقدّم كل ما تحتاجه لبناء حضور بصري قوي ومميّز.',
+        'srv.s1.t': 'Social Media Design',
+        'srv.s1.d': 'تصاميم سوشيال ميديا احترافية تجذب المتابعين وتعزّز التفاعل مع براندك على جميع المنصات.',
+        'srv.s2.t': 'Branding & Identity',
+        'srv.s2.d': 'هويات بصرية كاملة من الصفر، نبني شخصية بصرية فريدة تعكس قيم علامتك التجارية وتميّزها عن المنافسين.',
+        'srv.s3.t': 'Banner & Ads Design',
+        'srv.s3.d': 'بانرات إعلانية مدروسة تحقق نتائج فعلية، نصمم لحملاتك الإعلانية بصريات تحوّل المشاهدين لعملاء.',
+        'srv.s4.t': 'Motion Graphics',
+        'srv.s4.d': 'جرافيك متحرّك يضيف حياة لمحتواك، فيديوهات تعريفية وموشن جرافيك يجذب الانتباه ويوصل رسالتك بفعالية.',
+        'srv.s5.t': 'Logo Design',
+        'srv.s5.d': 'لوجوهات احترافية مميّزة، نصمم رمز يحكي قصة براندك ويبقى راسخ في أذهان عملائك لسنوات.',
+        'srv.s6.t': 'UI / UX Design',
+        'srv.s6.d': 'تجارب رقمية سلسة وممتعة، نصمم واجهات تطبيقات ومواقع تركّز على المستخدم وتحقق أهداف عملك.',
+        'port.label': 'أعمالنا',
+        'port.title': 'مشاريع نفتخر بها',
+        'port.sub': 'مختارات من آخر أعمالنا، كل مشروع يحكي قصة فريدة لعلامة تجارية مميّزة.',
+        'port.f1': 'الكل', 'port.f2': 'Branding', 'port.f3': 'Social Media', 'port.f4': 'Motion', 'port.f5': 'UI/UX',
+        'port.p1.t': 'Nova Coffee Brand', 'port.p1.s': 'تصميم هوية · 2025',
+        'port.p2.t': 'Luna Fashion', 'port.p2.s': 'حملة سوشيال · 2025',
+        'port.p3.t': 'Tech Startup Intro', 'port.p3.s': 'موشن جرافيك · 2025',
+        'port.p4.t': 'Fitness App', 'port.p4.s': 'تصميم موبايل · 2025',
+        'port.p5.t': 'Pulse Music Label', 'port.p5.s': 'هوية بصرية · 2024',
+        'port.p6.t': 'Summer Campaign', 'port.p6.s': 'بانرات إعلانية · 2024',
+        'port.cta': 'شاهد المزيد من الأعمال',
+        'stats.s1': 'مشروع منجز', 'stats.s2': 'عميل سعيد', 'stats.s3': 'سنوات خبرة', 'stats.s4': 'جائزة وتكريم',
+        'price.label': 'الباقات',
+        'price.title': 'باقات مرنة تناسب جميع الاحتياجات',
+        'price.sub': 'اختر الباقة المناسبة لمشروعك، وكلها قابلة للتخصيص حسب احتياجاتك.',
+        'price.period': 'شهرياً', 'price.badge': 'الأكثر طلباً', 'price.cta': 'ابدأ الآن',
+        'price.b1.n': 'Starter', 'price.b1.t': 'باقة البداية',
+        'price.b1.f1': '12 تصميم سوشيال ميديا', 'price.b1.f2': 'تصميم كافر شهري', 'price.b1.f3': 'مراجعتين على كل تصميم', 'price.b1.f4': 'تسليم خلال 48 ساعة', 'price.b1.f5': 'دعم فني عبر الواتساب',
+        'price.b2.n': 'Growth', 'price.b2.t': 'باقة النمو',
+        'price.b2.f1': '30 تصميم سوشيال ميديا', 'price.b2.f2': '5 موشن جرافيك ريلز', 'price.b2.f3': 'تصميم بانرات إعلانية', 'price.b2.f4': 'مراجعات غير محدودة', 'price.b2.f5': 'مدير حساب مخصص', 'price.b2.f6': 'تقرير أداء شهري',
+        'price.b3.n': 'Premium', 'price.b3.t': 'باقة الأعمال',
+        'price.b3.f1': 'تصاميم غير محدودة', 'price.b3.f2': 'هوية بصرية كاملة', 'price.b3.f3': 'موشن جرافيك متقدم', 'price.b3.f4': 'UI/UX للتطبيقات', 'price.b3.f5': 'دعم على مدار الساعة', 'price.b3.f6': 'استشارات تسويقية',
+        'tst.label': 'آراء العملاء',
+        'tst.title': 'ماذا يقول عنا عملاؤنا؟',
+        'tst.sub': 'شهادات من شركات وعلامات تجارية وثقت في خبرتنا.',
+        'tst.t1.txt': '"تجربة استثنائية مع فريق Shendy Studio. الاحترافية، الالتزام بالمواعيد، وجودة التصاميم تفوّقت على توقعاتي. نتائج تسويقية رائعة على السوشيال ميديا منذ بداية تعاوننا."',
+        'tst.t1.n': 'أحمد محمد', 'tst.t1.r': 'مدير تسويق · Nova Café',
+        'tst.t2.txt': '"الهوية البصرية اللي صمموها لبراندنا كانت بمستوى عالمي. كل تفصيلة مدروسة وكل عنصر له معنى. أنصح أي صاحب براند يتعامل معاهم بدون تردد."',
+        'tst.t2.n': 'سارة عبدالله', 'tst.t2.r': 'CEO · Luna Fashion',
+        'tst.t3.txt': '"تعاملت مع كذا استوديو قبل كده، بس فعلاً Shendy Studio مختلفين. الإبداع، السرعة، والمتابعة المستمرة خلّوا التجربة سلسة جداً والنتيجة فاقت المطلوب."',
+        'tst.t3.n': 'محمود حسن', 'tst.t3.r': 'Founder · Pulse Music',
+        'cta.title': 'جاهز نبدأ مشروعك القادم؟',
+        'cta.sub': 'احكيلنا عن فكرتك ودعنا نحوّلها لتصميم يخطف الأنظار.',
+        'cta.btn': 'احصل على عرض سعر مجاني',
+        'contact.title': 'خلينا نتكلم',
+        'contact.sub': 'سواء عندك سؤال، فكرة مشروع، أو محتاج استشارة، فريقنا جاهز للرد عليك خلال ساعات.',
+        'contact.email': 'البريد الإلكتروني', 'contact.hours': 'ساعات العمل', 'contact.hoursVal': 'السبت - الخميس · 10 ص - 8 م',
+        'contact.follow': 'تابعنا على',
+        'form.title': 'ابدأ مشروعك', 'form.sub': 'املأ النموذج وسنتواصل معك في أقرب وقت.',
+        'form.name': 'الاسم', 'form.phone': 'رقم الهاتف', 'form.email': 'البريد الإلكتروني',
+        'form.service': 'نوع الخدمة', 'form.service.opt': 'اختر الخدمة المطلوبة',
+        'form.message': 'تفاصيل المشروع', 'form.submit': 'إرسال الطلب',
+        'form.success': 'تم استلام رسالتك! هنتواصل معاك قريب.',
+        'footer.about': 'وكالة تصميم إبداعية متخصصة في بناء هويات بصرية مميّزة وحلول تصميم متكاملة لعلامتك التجارية.',
+        'footer.col1': 'الشركة', 'footer.col2': 'الخدمات', 'footer.col3': 'تواصل معنا',
+        'footer.location': 'القاهرة، مصر',
+        'footer.rights': 'جميع الحقوق محفوظة.',
+        'footer.made': 'صُمم بحب من قبل فريق Shendy Studio'
+      },
+      en: {
+        'nav.services': 'Services',
+        'nav.work': 'Our Work',
+        'nav.pricing': 'Pricing',
+        'nav.testimonials': 'Testimonials',
+        'nav.contact': 'Contact',
+        'nav.cta': 'Start Project',
+        'hero.badge': 'Available for new projects',
+        'hero.title1': 'We design',
+        'hero.title2': 'visual identities',
+        'hero.title3': 'that leave an impact',
+        'hero.lead': 'Shendy Studio is a creative agency specialized in social media design, brand identity, advertising banners, and motion graphics. We turn your ideas into eye-catching visual experiences.',
+        'hero.cta1': 'Start Your Project',
+        'hero.cta2': 'View Our Work',
+        'hero.mini1': '+150 Projects',
+        'hero.mini1sub': 'Delivered',
+        'hero.mini2': 'Happy Clients',
+        'hero.mini2sub': '98% Satisfaction',
+        'hero.mini3': 'Fast Delivery',
+        'hero.mini3sub': 'Always on time',
+        'marq.1': 'Creative Branding',
+        'marq.2': 'Social Media Design',
+        'marq.3': 'Motion Graphics',
+        'marq.4': 'Ad Banners',
+        'marq.5': 'Logo Design',
+        'marq.6': 'App Interfaces',
+        'services.label': 'Our Services',
+        'services.title': 'Complete design solutions for your brand',
+        'services.sub': 'From initial concept to final execution, we provide everything you need to build a strong and distinctive visual presence.',
+        'srv.s1.t': 'Social Media Design',
+        'srv.s1.d': 'Professional social media designs that engage followers and boost interaction with your brand across all platforms.',
+        'srv.s2.t': 'Branding & Identity',
+        'srv.s2.d': 'Complete visual identities from scratch. We build a unique brand personality that reflects your values and stands out from competitors.',
+        'srv.s3.t': 'Banner & Ads Design',
+        'srv.s3.d': 'Thoughtful ad banners that deliver real results. We design visuals for your campaigns that convert viewers into customers.',
+        'srv.s4.t': 'Motion Graphics',
+        'srv.s4.d': 'Animated graphics that bring life to your content. Promotional videos and motion graphics that grab attention and deliver your message.',
+        'srv.s5.t': 'Logo Design',
+        'srv.s5.d': 'Distinctive professional logos. We design a mark that tells your brand story and stays in your clients\' minds for years.',
+        'srv.s6.t': 'UI / UX Design',
+        'srv.s6.d': 'Smooth and enjoyable digital experiences. We design app and web interfaces that focus on the user and achieve your business goals.',
+        'port.label': 'Our Work',
+        'port.title': 'Projects we\'re proud of',
+        'port.sub': 'A selection of our latest work, each project tells a unique story of a distinctive brand.',
+        'port.f1': 'All', 'port.f2': 'Branding', 'port.f3': 'Social Media', 'port.f4': 'Motion', 'port.f5': 'UI/UX',
+        'port.p1.t': 'Nova Coffee Brand', 'port.p1.s': 'Identity Design · 2025',
+        'port.p2.t': 'Luna Fashion', 'port.p2.s': 'Social Campaign · 2025',
+        'port.p3.t': 'Tech Startup Intro', 'port.p3.s': 'Motion Graphics · 2025',
+        'port.p4.t': 'Fitness App', 'port.p4.s': 'Mobile UI · 2025',
+        'port.p5.t': 'Pulse Music Label', 'port.p5.s': 'Brand Identity · 2024',
+        'port.p6.t': 'Summer Campaign', 'port.p6.s': 'Banner Ads · 2024',
+        'port.cta': 'View More Projects',
+        'stats.s1': 'Projects Done', 'stats.s2': 'Happy Clients', 'stats.s3': 'Years Experience', 'stats.s4': 'Awards Won',
+        'price.label': 'Pricing',
+        'price.title': 'Flexible packages for every need',
+        'price.sub': 'Choose the package that fits your project. All packages are customizable to your needs.',
+        'price.period': 'per month', 'price.badge': 'Most Popular', 'price.cta': 'Get Started',
+        'price.b1.n': 'Starter', 'price.b1.t': 'Starter Package',
+        'price.b1.f1': '12 social media designs', 'price.b1.f2': 'Monthly cover design', 'price.b1.f3': '2 revisions per design', 'price.b1.f4': 'Delivery within 48 hours', 'price.b1.f5': 'WhatsApp support',
+        'price.b2.n': 'Growth', 'price.b2.t': 'Growth Package',
+        'price.b2.f1': '30 social media designs', 'price.b2.f2': '5 motion graphic reels', 'price.b2.f3': 'Ad banner designs', 'price.b2.f4': 'Unlimited revisions', 'price.b2.f5': 'Dedicated account manager', 'price.b2.f6': 'Monthly performance report',
+        'price.b3.n': 'Premium', 'price.b3.t': 'Business Package',
+        'price.b3.f1': 'Unlimited designs', 'price.b3.f2': 'Complete brand identity', 'price.b3.f3': 'Advanced motion graphics', 'price.b3.f4': 'UI/UX for apps', 'price.b3.f5': '24/7 support', 'price.b3.f6': 'Marketing consultations',
+        'tst.label': 'Testimonials',
+        'tst.title': 'What our clients say',
+        'tst.sub': 'Testimonials from companies and brands that trusted our expertise.',
+        'tst.t1.txt': '"An exceptional experience with the Shendy Studio team. Professionalism, punctuality, and design quality exceeded my expectations. Great marketing results on social media since the start."',
+        'tst.t1.n': 'Ahmed Mohamed', 'tst.t1.r': 'Marketing Manager · Nova Café',
+        'tst.t2.txt': '"The visual identity they designed for our brand was world-class. Every detail is thought out and every element has meaning. I recommend any brand owner to work with them without hesitation."',
+        'tst.t2.n': 'Sara Abdullah', 'tst.t2.r': 'CEO · Luna Fashion',
+        'tst.t3.txt': '"I\'ve worked with several studios before, but Shendy Studio is truly different. Creativity, speed, and constant follow-up made the experience smooth and exceeded expectations."',
+        'tst.t3.n': 'Mahmoud Hassan', 'tst.t3.r': 'Founder · Pulse Music',
+        'cta.title': 'Ready to start your next project?',
+        'cta.sub': 'Tell us about your idea and let us turn it into a design that captures attention.',
+        'cta.btn': 'Get a Free Quote',
+        'contact.title': 'Let\'s talk',
+        'contact.sub': 'Whether you have a question, project idea, or need consultation, our team is ready to respond within hours.',
+        'contact.email': 'Email', 'contact.hours': 'Working Hours', 'contact.hoursVal': 'Sat - Thu · 10 AM - 8 PM',
+        'contact.follow': 'Follow Us',
+        'form.title': 'Start Your Project', 'form.sub': 'Fill out the form and we\'ll get back to you shortly.',
+        'form.name': 'Full Name', 'form.phone': 'Phone Number', 'form.email': 'Email Address',
+        'form.service': 'Service Type', 'form.service.opt': 'Select a service',
+        'form.message': 'Project Details', 'form.submit': 'Send Request',
+        'form.success': 'Message received! We\'ll get back to you soon.',
+        'footer.about': 'A creative design agency specialized in building distinctive visual identities and integrated design solutions for your brand.',
+        'footer.col1': 'Company', 'footer.col2': 'Services', 'footer.col3': 'Contact',
+        'footer.location': 'Cairo, Egypt',
+        'footer.rights': 'All rights reserved.',
+        'footer.made': 'Designed with love by the Shendy Studio team'
+      }
+    };
+
+    function setLang(lang) {
+      const html = document.documentElement;
+      html.setAttribute('lang', lang);
+      html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+      html.setAttribute('data-lang', lang);
+      document.getElementById('langToggle').textContent = lang === 'ar' ? 'EN' : 'AR';
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      try { localStorage.setItem('shendy-lang', lang); } catch(e) {}
+    }
+
+    document.getElementById('langToggle').addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-lang') || 'ar';
+      setLang(current === 'ar' ? 'en' : 'ar');
+    });
+
+    try {
+      const saved = localStorage.getItem('shendy-lang');
+      if (saved) setLang(saved);
+    } catch(e) {}
+
+    /* Navbar scroll */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    });
+
+    /* Mobile menu */
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+    /* Reveal on scroll */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    /* Animated counters */
+    const counters = document.querySelectorAll('[data-count]');
+    const countIo = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.count, 10);
+          let current = 0;
+          const step = Math.max(1, Math.ceil(target / 60));
+          const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+              current = target;
+              clearInterval(timer);
+              el.textContent = target + '+';
+            } else {
+              el.textContent = current;
+            }
+          }, 25);
+          countIo.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => countIo.observe(c));
+
+    /* Portfolio filters (visual only - placeholder) */
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    /* Contact form -> opens WhatsApp with pre-filled message */
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const lang = document.documentElement.getAttribute('data-lang') || 'ar';
+      const greeting = lang === 'ar' ? 'مرحباً، أنا' : 'Hello, I am';
+      const serviceLabel = lang === 'ar' ? 'الخدمة' : 'Service';
+      const phoneLabel = lang === 'ar' ? 'الهاتف' : 'Phone';
+      const emailLabel = lang === 'ar' ? 'الإيميل' : 'Email';
+      const detailsLabel = lang === 'ar' ? 'التفاصيل' : 'Details';
+
+      const msg = `${greeting} ${data.get('name')}%0A${phoneLabel}: ${data.get('phone')}%0A${emailLabel}: ${data.get('email')}%0A${serviceLabel}: ${data.get('service')}%0A${detailsLabel}: ${data.get('message')}`;
+
+      window.open(`https://wa.me/201000000000?text=${msg}`, '_blank');
+
+      status.className = 'form-status success';
+      status.textContent = translations[lang]['form.success'];
+      form.reset();
+      setTimeout(() => { status.className = 'form-status'; status.textContent = ''; }, 6000);
+    });
+
+    /* Smooth scroll fallback for anchor links */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
